@@ -1,0 +1,2 @@
+Version 1.1.RC1
+* Se corrige el error que permitia que un usuario que ingresara la contraseña en blanco fuera identificado como válido.

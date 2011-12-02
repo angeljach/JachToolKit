@@ -4,7 +4,8 @@
 
   <groupId>com.jach</groupId>
   <artifactId>JachToolKit</artifactId>
-  <version>1.0</version>
+  <version>1.1.RC1</version>
+  <description>Utilerias desarrolladas por JACH.</description>
   <packaging>jar</packaging>
 
   <name>JachToolKit</name>

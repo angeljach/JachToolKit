@@ -27,6 +27,14 @@ public class LdapTools {
      * @param dn Description Name of the domain. It's like DC=DOMAIN,DC=COM,DC=MX
      */
     public LdapTools(String userName, String password, String _domain, String hostAndPort, String dn) {
+        //---|| Validación de campos llenos.
+        //---|| Si se pasa un password vacío, el programa se ejecuta sin marcar 
+        //---|| error ya que el objeto ctxGC es inicializado (aunque erroneamente).
+        if (userName.equals("") || password.equals("") || _domain.equals("") 
+                || hostAndPort.equals("") || dn.equals("")) {
+            return;
+        }
+        
         this.userName = userName;
         this.dn = dn;
         
