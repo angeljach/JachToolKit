@@ -90,6 +90,7 @@ public class LdapTools {
     }
 
     public static void main(String[] args) {
+        /*
         LdapTools ldap = new LdapTools("acruzh",
                 "H3nryC0w",
                 "BMVCORP.COM.MX",
@@ -124,6 +125,7 @@ public class LdapTools {
             }
         } else {
             System.out.println("FALOOOO");
-        }        
+        }
+         */
     }
 }
