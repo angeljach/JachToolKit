@@ -68,7 +68,7 @@ public class LdapTools {
      * @param returnedAtts Array of attributes requered.
      * @return Attributes object with the required information.
      */
-    public Attributes getUserAttributes(String[] returnedAtts) {
+    public Attributes getUserAttributes(String[] returnedAtts) throws NamingException {
             //String returnedAtts[] = {"sn", "givenName", "mail", "displayName"};
             String searchFilter = "(&(objectClass=user)(" + ATTRIBUTE_FOR_USER + "=" + userName + "))";
 
@@ -77,19 +77,14 @@ public class LdapTools {
             searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
             String searchBase = dn;
 
-            try {                
-                //    Search for objects in the GC using the filter
-                NamingEnumeration answer = ctxGC.search(searchBase, searchFilter, searchCtls);
-                while (answer.hasMoreElements()) {
-                    SearchResult sr = (SearchResult) answer.next();
-                    Attributes attrs = sr.getAttributes();
-                    if (attrs != null) {
-                        return attrs;
-                    }
+            //    Search for objects in the GC using the filter
+            NamingEnumeration answer = ctxGC.search(searchBase, searchFilter, searchCtls);
+            while (answer.hasMoreElements()) {
+                SearchResult sr = (SearchResult) answer.next();
+                Attributes attrs = sr.getAttributes();
+                if (attrs != null) {
+                    return attrs;
                 }
-            } catch (NamingException e) {
-                //TODO Manejar la excepción. Agregar un logger.
-                //e.printStackTrace();
             }
             return null;
     }
@@ -106,22 +101,26 @@ public class LdapTools {
             
             System.out.println("Tratando de obtener atributos.");
             String arrayAtts[] = {"sn", "givenName", "mail", "displayName"};
-            Attributes att = ldap.getUserAttributes(arrayAtts);
-            
-            if (att == null) {
-                System.out.println("Los atributos solicitados no fueron encontrados.");
-            } else {
-                String s = att.get("givenName").toString();
-                System.out.println("GIVEN NAME=" + s);
+            try {
+                Attributes att = ldap.getUserAttributes(arrayAtts);
+
+                if (att == null) {
+                    System.out.println("Los atributos solicitados no fueron encontrados.");
+                } else {
+                    String s = att.get("givenName").toString();
+                    System.out.println("GIVEN NAME=" + s);
+
+                    s = att.get("sn").toString();
+                    System.out.println("SECOND NAME=" + s);
+
+                    s = att.get("displayName").toString();
+                    System.out.println("DISPLAY NAME=" + s);
+
+                    s = att.get("mail").toString();
+                    System.out.println("EMAIL=" + s);
+                }
+            } catch(NamingException ex) {
                 
-                s = att.get("sn").toString();
-                System.out.println("SECOND NAME=" + s);
-                
-                s = att.get("displayName").toString();
-                System.out.println("DISPLAY NAME=" + s);
-                
-                s = att.get("mail").toString();
-                System.out.println("EMAIL=" + s);
             }
         } else {
             System.out.println("FALOOOO");
