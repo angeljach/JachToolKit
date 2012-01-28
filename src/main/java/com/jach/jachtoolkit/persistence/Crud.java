@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  *
  * @author acruzh
+ * @since 1.1
  */
 public interface Crud extends Serializable {
     
